@@ -7,24 +7,31 @@ class User(BaseModel):
     id: Optional[str] = None
     name: str
     telephone: str
-    My_Products: List[Product]
-    My_Vendas: List[Order]
-    my_Requests: List[Order]
 
 
 class Product(BaseModel):
     id: Optional[str] = None
-    user:User
     name: str
     details: str
     price: float
     available: bool = False
+    #sub classe para informar que o schema esta relacionado a um modelo do banco de dados
+    class Config:
+        orm_mode = True
+
+
+class ProductSimple(BaseModel):
+    id: Optional[str] = None
+    name: str
+    price: float
+
+    class Config:
+        orm_mode = True
 
 
 class Order(BaseModel):
     id: Optional[str] = None
     user: User
-    product: Product
     amount: int
     delivery: bool = True
     address: str
